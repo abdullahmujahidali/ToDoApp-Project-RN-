@@ -4,9 +4,9 @@
     "slug": "ToDoList",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/todoLogo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/todoLogo1.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
