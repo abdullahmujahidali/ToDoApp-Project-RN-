@@ -1,14 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList,Modal } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import tempData from './tempData'
 import colors from './Colors'
 import TodoList from "./components/ToDoList";
+import AddListModal from './components/AddListModal';
 export default class App extends React.Component {
+  state = {
+    addtodoVisible: true
+  }
+  toggleAddTodoModal(){
+    this.setState({addtodoVisible: !this.state.addtodoVisible})
+  }
+
   render() {
     return (
       <View style={styles.container}>
+      <Modal animationType="slide" visible={this.state.addtodoVisible}>
+        <AddListModal closeModal={()=> this.toggleAddTodoModal()}/>
+      </Modal>
         <Image style={styles.imgStyle} source={require('./assets/todoLogo.png')} />
         <View style={{ flexDirection: "row" }}>
           <View style={styles.divider} />
@@ -19,9 +29,9 @@ export default class App extends React.Component {
           <View style={styles.divider} />
         </View>
         <View style={{ marginVertical: 48 }}>
-          <TouchableOpacity style={styles.addList}>
-            <AntDesign name="plus" size={16} color={colors.dark} />
-            <Text style={styles.add}>Add List</Text>
+          <TouchableOpacity style={styles.addList} >
+            <AntDesign style={styles.add} size={24} name="plus"  onPress={()=>this.toggleAddTodoModal()} onRequestClose={()=>this.toggleAddTodoModal()}/>
+           
           </TouchableOpacity>
         </View>
 
@@ -47,13 +57,13 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },
   imgStyle: {
-    width: 80,
-    height: 80 
+    width: 100,
+    height: 100 
   },
   divider: {
     backgroundColor: colors.lightBlue,
@@ -64,21 +74,21 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 38,
     fontWeight: "800",
-    color: colors.dark,
+    color: colors.light,
     paddingHorizontal: 64
   },
   addList: {
-    borderWidth: 2,
+    borderWidth: 1,
+    borderRadius: 50,
     borderColor: colors.lightBlue,
-    borderRadius: 4,
     padding: 16,
     alignItems: "center",
     justifyContent: "center"
   },
   add: {
-    color: colors.primary,
+    color: colors.light,
     fontWeight: "600",
+    borderRadius: 25,
     fontSize: 18,
-    marginTop: 8
   }
 });
