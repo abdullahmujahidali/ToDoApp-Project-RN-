@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInput, TouchableWithoutFeedback } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'
-import Colors from '../Colors';
+import colors from '../Colors'
 import tempData from '../tempData';
 export default class AddListModal extends React.Component {
     backgroundColors = ["#5CD859", "#24A6D9", "#595BD9", "#8022D9", "#D2159D", "#D85963", "#D88559", "#304659"];
@@ -9,14 +9,19 @@ export default class AddListModal extends React.Component {
         name: "",
         color: this.backgroundColors[0]
     }
-
+    
     createTodo = () => {
         const { name, color } = this.state
-
+        console.log(name,color)
         tempData.push({
             name,
             color,
-            todo: []
+            todo: [
+                {
+                    title: "Reserver Hotel Room",
+                    completed: true
+                }
+            ]
         })
         this.setState({ name: "" })
         this.props.closeModal();
@@ -33,7 +38,7 @@ export default class AddListModal extends React.Component {
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={this.props.closeModal}>
-                    <AntDesign name="close" size={24} color={Colors.light}></AntDesign>
+                    <AntDesign name="close" size={24} color={colors.light}></AntDesign>
                 </TouchableOpacity>
 
 
@@ -43,11 +48,13 @@ export default class AddListModal extends React.Component {
                 </Text>
                     <TextInput style={styles.input} placeholder="List Name ?" onChangeText={text => this.setState({ name: text })}></TextInput>
 
+                        
+
                     <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>
                         {this.renderColors()}
                     </View>
                     <TouchableOpacity style={[styles.create, { backgroundColor: this.state.color }]} onPress={this.createTodo}>
-                        <Text style={{ color: Colors.light, fontWeight: "600" }}>Create!</Text>
+                        <Text style={{ color: colors.light, fontWeight: "600" }}>Create!</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -65,13 +72,13 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 28,
-        color: Colors.light,
+        color: colors.light,
         alignSelf: "center",
         marginBottom: 16
     },
     input: {
         borderWidth: StyleSheet.hairlineWidth,
-        borderColor: Colors.primary,
+        borderColor: colors.primary,
         borderRadius: 6,
         height: 50,
         marginTop: 8,
