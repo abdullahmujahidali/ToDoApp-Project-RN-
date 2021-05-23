@@ -67,40 +67,40 @@ Please consider following this project's author, [Abdullah Mujahid](https://gith
 
 ## SPLASH SCREEN
 ### (IOS)
-![](images/splash.PNG)
+![](images/splash.jpg)
 
 ### (ANDROID)
-![](images/SplashAnd.PNG)
+![](images/SplashAnd.png)
 
 
 ## HOME SCREEN
 ### (IOS)
-![](images/home.PNG)
+![](images/home.jpg)
 
 ### (ANDROID)
-![](images/andView.PNG)
+![](images/andView.png)
 
 ## CREATE SCREEN
 ### (IOS)
-![](images/create.PNG)
+![](images/create.jpg)
 
 ### (ANDROID)
-![](images/andCreate.PNG)
+![](images/andCreate.png)
 
 ## VIEW TASK LIST SCREEN
 ### (IOS)
-![](images/view.PNG)
+![](images/view.jpg)
 
 ### (ANDROID)
-![](images/andView.PNG)
+![](images/andView.png)
 
 
 ## VIEW EDIT/DELETE SCREEN
 ### (IOS)
-![](images/view.PNG)
+![](images/view.jpg)
 
 ### (ANDROID)
-![](images/andView.PNG)
+![](images/andView.png)
 
 
 
