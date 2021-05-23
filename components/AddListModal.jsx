@@ -13,16 +13,10 @@ export default class AddListModal extends React.Component {
     createTodo = () => {
         const { name, color } = this.state
         console.log(name,color)
-        tempData.push({
-            name,
-            color,
-            todo: [
-                {
-                    title: "Reserver Hotel Room",
-                    completed: true
-                }
-            ]
-        })
+        const list ={name,color};
+        this.props.addList(list); 
+
+        
         this.setState({ name: "" })
         this.props.closeModal();
     }

@@ -1,27 +1,42 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList,Modal } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, Modal, KeyboardAvoidingView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import tempData from './tempData'
 import colors from './Colors'
 import TodoList from "./components/ToDoList";
 import AddListModal from './components/AddListModal';
+import tempData from './tempData'
 export default class App extends React.Component {
   state = {
-    addtodoVisible: false
+    addtodoVisible: false,
+    lists: tempData
   }
-  toggleAddTodoModal(){
-    this.setState({addtodoVisible: !this.state.addtodoVisible})
+  toggleAddTodoModal() {
+    this.setState({ addtodoVisible: !this.state.addtodoVisible })
   }
-  renderList = list =>{
-    return <TodoList list={list} />
+  renderList = list => {
+    return <TodoList list={list} updateList={this.updateList} />
   }
+
+  addList = list => {
+    this.setState({ lists: [...[this.state.lists], { ...list, id: this.state.lists.length + 1, todos: [] }] });
+
+  };
+  updateList=list=>{
+    this.setState({
+      lists: this.state.lists.map(item=>{
+        return item.id === list.id ? list:item;
+      })
+    })
+  };
 
   render() {
     return (
       <View style={styles.container}>
-      <Modal animationType="slide" visible={this.state.addtodoVisible}>
-        <AddListModal closeModal={()=> this.toggleAddTodoModal()}/>
-      </Modal>
+        <Modal 
+          animationType="slide" visible={this.state.addtodoVisible}>
+          <AddListModal closeModal={() => this.toggleAddTodoModal()} 
+          addList={this.addList} />
+        </Modal>
         <Image style={styles.imgStyle} source={require('./assets/todoLogo.png')} />
         <View style={{ flexDirection: "row" }}>
           <View style={styles.divider} />
@@ -33,24 +48,25 @@ export default class App extends React.Component {
         </View>
         <View style={{ marginVertical: 48 }}>
           <TouchableOpacity style={styles.addList} >
-            <AntDesign style={styles.add} size={24} name="plus"  onPress={()=>this.toggleAddTodoModal()} onRequestClose={()=>this.toggleAddTodoModal()}/>
-           
+            <AntDesign style={styles.add} size={24} name="plus" onPress={() => this.toggleAddTodoModal()} onRequestClose={() => this.toggleAddTodoModal()} />
+
           </TouchableOpacity>
         </View>
 
         <View style={{ height: 275, paddingLeft: 32 }}>
           <FlatList
-            data={tempData}
+            data={this.state.lists}
             keyExtractor={item => item.name}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) =>
               this.renderList(item)
             }
+            keyboardShouldPersistTaps="always"
           />
 
         </View>
-      
+
       </View>
     );
   }
@@ -66,7 +82,7 @@ const styles = StyleSheet.create({
   },
   imgStyle: {
     width: 100,
-    height: 100 
+    height: 100
   },
   divider: {
     backgroundColor: colors.lightBlue,
