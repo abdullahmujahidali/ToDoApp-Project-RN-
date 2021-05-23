@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "A simple todo application that allows user to create a task list and in that list he/she can create sub task, each task list and task can be updated or deleted as per user choice",
+    "githubUrl": "https://github.com/abdullahmujahidali/ToDoApp-Project-RN-"
   }
 }
