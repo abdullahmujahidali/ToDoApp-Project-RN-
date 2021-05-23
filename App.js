@@ -5,10 +5,23 @@ import colors from './Colors'
 import TodoList from "./components/ToDoList";
 import AddListModal from './components/AddListModal';
 import tempData from './tempData'
+import Database from './Database'
 export default class App extends React.Component {
   state = {
     addtodoVisible: false,
-    lists: tempData
+    lists: tempData,
+    user:{
+
+    }
+  }
+  componentDidMount(){
+    db = new Database((error,user)=>{
+      if(error){
+        return alert("Something went horribly wrong")
+      }
+
+      this.setState({user})
+    });
   }
   toggleAddTodoModal() {
     this.setState({ addtodoVisible: !this.state.addtodoVisible })
@@ -38,6 +51,9 @@ export default class App extends React.Component {
           addList={this.addList} />
         </Modal>
         <Image style={styles.imgStyle} source={require('./assets/todoLogo.png')} />
+        <View>
+          <Text style={{color:"white"}}>User: {this.state.user.uid}</Text>
+        </View>
         <View style={{ flexDirection: "row" }}>
           <View style={styles.divider} />
           <Text style={styles.title}>
