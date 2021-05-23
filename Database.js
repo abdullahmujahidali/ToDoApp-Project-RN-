@@ -28,6 +28,13 @@ class Database {
             }
         })
     }
+    getLists(callback){
+        let ref= firebase.firestore().collections('addytodo-default-rtdb').doc(this.userId).collections("data")
+    }
+
+    get userId(){
+        return firebase.auth().currentUser.uid
+    }
 }
 
 export default Database;

@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput,Keyboard } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput,Keyboard,Animated } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons'
 import Colors from '../Colors';
+import {Swipeable } from "react-native-gesture-handler"
 export default class TodoModal extends React.Component {
     state = {
         newTodo: ""
@@ -23,6 +24,7 @@ export default class TodoModal extends React.Component {
     }
     renderTodo = (todo,index) => {
         return (
+            <Swipeable renderRightActions={(_,dragX)=>this.rightActions(dragX,index)}>
             <View style={styles.todoContainer}>
 
                 <TouchableOpacity onPress={()=>this.toggleTodoComplete(index)}>
@@ -33,7 +35,30 @@ export default class TodoModal extends React.Component {
                     {todo.title}
                 </Text>
             </View>
+            </Swipeable>
 
+        )
+    }
+    rightActions=(dragX,index)=>{
+        const scale= dragX.interpolate({
+            inputRange:[-100,0],
+            outputRange:[1,0.9],
+            extrapolate:"clamp"
+        })
+
+        const opacity=dragX.interpolate({
+            inputRange:[-100,-20,0],
+            outputRange:[1,0.9,0],
+            extrapolate:"clamp"
+        })
+        return(
+            <TouchableOpacity>
+                <Animated.View style={styles.deleteButton, {opacity:opacity}}>
+                    <Animated.Text style={{color:Colors.light,fontWeight:"800",transform:[{scale}]}}>
+                        Delete
+                    </Animated.Text>
+                </Animated.View>
+            </TouchableOpacity>
         )
     }
     render() {
@@ -60,11 +85,10 @@ export default class TodoModal extends React.Component {
                         </Text>
                         </View>
                     </View>
-                    <View style={[styles.section, { flex: 3 }]}>
+                    <View style={[styles.section, { flex: 3,marginVertical:16 }]}>
                         <FlatList data={list.todos}
                             renderItem={({ item,index }) => this.renderTodo(item,index)}
                             keyExtractor={item => item.title}
-                            contentContainerStyle={{ paddingHorizontal: 32, paddingVertical: 64 }}
                             showsVerticalScrollIndicator={false}
                         ></FlatList>
 
@@ -92,14 +116,14 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     section: {
-        flex: 1,
         alignSelf: "stretch"
     },
     header: {
         justifyContent: "flex-end",
         marginLeft: 64,
         borderBottomWidth: 3,
-        color: 'white'
+        color: 'white',
+        paddingTop:16
     },
     title: {
         fontSize: 30,
@@ -115,7 +139,8 @@ const styles = StyleSheet.create({
     footer: {
         paddingHorizontal: 32,
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        paddingVertical:16
     },
     input: {
         flex: 1,
@@ -137,11 +162,19 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         flexDirection: 'row',
         alignItems: 'center',
-        color: 'white'
+        color: 'white',
+        paddingLeft:32
     },
     todo: {
         color: Colors.light,
         fontWeight: "700",
         fontSize: 16
+    },
+    deleteButton:{
+        flex:1,
+        backgroundColor: Colors.primary,
+        justifyContent:'center',
+        alignItems:'center',
+        width:60
     }
 })
