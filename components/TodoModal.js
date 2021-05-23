@@ -15,12 +15,17 @@ export default class TodoModal extends React.Component {
     }
     addTodo =() =>{
         let list = this.props.list
-        list.todos.push({title:this.state.newTodo, completed:false})
-
-        this.props.updateList(list)
+        if(!list.todos.some(todo=>todo.title===this.state.newTodo)){
+            list.todos.push({title:this.state.newTodo, completed:false})
+            this.props.updateList(list)
+        }
         this.setState({newTodo:""})
-
         Keyboard.dismiss();
+    }
+    deleteTodo = index =>{
+        let list=this.props.list
+        list.todos.splice(index,1)
+        this.props.updateList(list);
     }
     renderTodo = (todo,index) => {
         return (
@@ -52,8 +57,8 @@ export default class TodoModal extends React.Component {
             extrapolate:"clamp"
         })
         return(
-            <TouchableOpacity>
-                <Animated.View style={styles.deleteButton, {opacity:opacity}}>
+            <TouchableOpacity onPress ={()=>this.deleteTodo(index)}>
+                <Animated.View style={styles.deleteButton , {opacity:opacity}}>
                     <Animated.Text style={{color:Colors.light,fontWeight:"800",transform:[{scale}]}}>
                         Delete
                     </Animated.Text>

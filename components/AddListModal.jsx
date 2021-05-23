@@ -1,22 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInput, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Image, TouchableOpacity, TextInput, TouchableWithoutFeedback } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'
 import colors from '../Colors'
-import tempData from '../tempData';
 export default class AddListModal extends React.Component {
     backgroundColors = ["#5CD859", "#24A6D9", "#595BD9", "#8022D9", "#D2159D", "#D85963", "#D88559", "#304659"];
     state = {
         name: "",
         color: this.backgroundColors[0]
     }
-    
+
     createTodo = () => {
         const { name, color } = this.state
-        console.log(name,color)
-        const list ={name,color};
-        this.props.addList(list); 
+        console.log(name, color)
+        const list = { name, color };
+        this.props.addList(list);
 
-        
+
         this.setState({ name: "" })
         this.props.closeModal();
     }
@@ -35,14 +34,16 @@ export default class AddListModal extends React.Component {
                     <AntDesign name="close" size={24} color={colors.light}></AntDesign>
                 </TouchableOpacity>
 
-
+                <Image style={styles.imgStyle} source={require('../assets/createL.png')} />
                 <View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
+
                     <Text style={styles.title}>
                         Create Todo List
                 </Text>
+
                     <TextInput style={styles.input} placeholder="List Name ?" onChangeText={text => this.setState({ name: text })}></TextInput>
 
-                        
+
 
                     <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>
                         {this.renderColors()}
@@ -79,6 +80,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         fontSize: 18,
         backgroundColor: "#808080"
+    },
+    imgStyle: {
+        width: 100,
+        height: 100
     },
     create: {
         marginTop: 24,
