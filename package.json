@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "3.2.0",
-    "expo": "~41.0.1",
+    "expo": "~46.0.15",
     "expo-status-bar": "~1.0.4",
     "firebase": "^7.9.0",
     "moment": "^2.29.1",
